@@ -6,10 +6,22 @@ class TaskManager
     {
         session_start();
 
-        $_SESSION['info'][] = $info;
+        if (isset($info['id'])) {
+            $key = $info['id'];
+            $_SESSION['info'][$key]['brand'] = $info['brand'];
+            $_SESSION['info'][$key]['color'] = $info['color'];
+            $_SESSION['info'][$key]['price'] = $info['price'];
 
-        // Toast Value
-        $_SESSION['toast'] = "Car added successfully!";
+            // Toast value
+            $_SESSION['toast'] = "Car updated successfully!";
+        } else {
+            $_SESSION['info'][] = $info;
+
+            // Toast Value
+            $_SESSION['toast'] = "Car added successfully!";
+        }
+
+
 
         return;
     }
