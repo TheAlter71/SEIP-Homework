@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <title>Homework</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
 
@@ -58,6 +58,7 @@
                     <th scope="col">Brand</th>
                     <th scope="col">Color</th>
                     <th scope="col">Price</th>
+                    <th scope="col">Options</th>
                 </tr>
             </thead>
             <tbody>
@@ -69,9 +70,11 @@
                     <th scope="row"><?= $key + 1 ?></th>
                     <td><?= $car['brand'] ?? [] ?></td>
                     <td><?= $car['color'] ?? [] ?></td>
-                    <td><?= $car['price'] ?? [] ?> BDT <a href="details.php?id=<?= $key ?>" class="mx-5">DETAILS</a> <a
-                            href="form.php?id=<?= $key ?>">EDIT</a>
-                        <a href="delete.php?id=<?= $key ?>" class="mx-5 mark-danger">DELETE</a>
+                    <td><?= $car['price'] ?? [] ?> BDT
+                    </td>
+                    <td><a href="details.php?id=<?= $key ?>" class="mx-5">DETAILS</a> <a
+                            href="form.php?id=<?= $key ?>&db_id=<?= $car['id'] ?>">EDIT</a>
+                        <a href="delete.php?id=<?= $car['id'] ?>" class="mx-5 mark-danger">DELETE</a>
                     </td>
                 </tr>
                 <?php }

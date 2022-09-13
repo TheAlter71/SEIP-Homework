@@ -23,9 +23,13 @@
     if (isset($_GET['id'])) {
         $the_key = $_GET['id'];
 
-        $brand = $_SESSION['info'][$_GET['id']]['brand'];
-        $color = $_SESSION['info'][$_GET['id']]['color'];
-        $price = $_SESSION['info'][$_GET['id']]['price'];
+        include_once './task_handler/task-manager.php';
+        $taskObj = new TaskManager();
+        $car = $taskObj->show();
+
+        $brand = $car[$the_key]['brand'];
+        $color = $car[$the_key]['color'];
+        $price = $car[$the_key]['price'];
     }
     ?>
 
@@ -44,12 +48,7 @@
 
         <a href="form.php?id=<?= $the_key ?>"><button type="reset" class="btn btn-primary">UPDATE</button></a>
         <a href="delete.php?id=<?= $the_key ?>"><button type="reset" class="btn btn-danger mx-3"> DELETE</button></a>
-
-
-
-
     </div>
-
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous">

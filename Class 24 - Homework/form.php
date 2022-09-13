@@ -21,11 +21,19 @@
     <?php
     session_start();
     if (isset($_GET['id'])) {
-        $key = $_GET['id'];
 
-        $brand = $_SESSION['info'][$_GET['id']]['brand'];
-        $color = $_SESSION['info'][$_GET['id']]['color'];
-        $price = $_SESSION['info'][$_GET['id']]['price'];
+        $key = $_GET['id'];
+        $db_id = $_GET['db_id'];
+
+        include_once './task_handler/task-manager.php';
+        $taskObj = new TaskManager();
+        $car = $taskObj->show();
+
+        $brand = $car[$key]['brand'];
+        $color = $car[$key]['color'];
+        $price = $car[$key]['price'];
+
+
         $button1 = "Update";
         $button2 = "Reset";
     }
@@ -40,12 +48,10 @@
             <?php
 
             if (isset($_GET['id'])) {
-
             ?>
-            <input hidden type="text" name="id" value="<?= $key ?>">
+            <input hidden type="text" name="id" value="<?= $db_id ?>">
             <?php
             }
-
             ?>
 
             <br>
@@ -57,20 +63,15 @@
                 <?php
                 if (isset($_SESSION['alert_brand'])) {
                 ?>
-
                 <div id="emailHelp" class="form-text" style="color:red;"><?= $_SESSION['alert_brand'] ?></div>
-
                 <?php
                     unset($_SESSION['alert_brand']);
                 } else {
                 ?>
-
                 <div id="emailHelp" class="form-text">Enter the brand name of the car.</div>
-
                 <?php
                 }
                 ?>
-
 
             </div>
             <div class="mb-3">
@@ -87,9 +88,7 @@
                     unset($_SESSION['alert_color']);
                 } else {
                 ?>
-
                 <div id="emailHelp" class="form-text">Enter the color of the car.</div>
-
                 <?php
                 }
                 ?>
@@ -102,9 +101,7 @@
                 <?php
                 if (isset($_SESSION['alert_price'])) {
                 ?>
-
                 <div id="emailHelp" class="form-text" style="color:red;"><?= $_SESSION['alert_price'] ?></div>
-
                 <?php
                     unset($_SESSION['alert_price']);
                 } else {

@@ -1,25 +1,30 @@
 <?php
 
-//use PDO;
-
 class TaskManager
 {
 
     public function create($info)
     {
-        session_start();
+
 
         $db = new PDO('mysql:host=localhost;dbname=car', 'root', '123');
 
         if (isset($info['id'])) {
-            $key = $info['id'];
-            $_SESSION['info'][$key]['brand'] = $info['brand'];
-            $_SESSION['info'][$key]['color'] = $info['color'];
-            $_SESSION['info'][$key]['price'] = $info['price'];
+
+            $statement = $db->prepare("UPDATE car_infos SET brand = :brand, color= :color, price= :price WHERE id = :id");
+            $statement->execute(
+                [
+                    'brand' => $info['brand'],
+                    'color' => $info['color'],
+                    'price' => $info['price'],
+                    'id' => $info['id']
+                ]
+            );
 
             // Toast value
             $_SESSION['toast'] = "Car updated successfully!";
         } else {
+            session_start();
 
             $statement = $db->prepare("INSERT INTO car_infos(brand, color, price) VALUES(:brand, :color, :price)");
             $statement->execute(
@@ -29,11 +34,9 @@ class TaskManager
                     'price' => $info['price']
                 ]
             );
-
             // Toast Value
             $_SESSION['toast'] = "Car added successfully!";
         }
-
         return;
     }
 
@@ -46,12 +49,18 @@ class TaskManager
         return $info;
     }
 
-
-
     public function delete($id)
     {
         session_start();
-        unset($_SESSION['info'][$id]);
+
+        $db = new PDO('mysql:host=localhost;dbname=car', 'root', '123');
+        $statement = $db->prepare("DELETE FROM car_infos WHERE id=:id");
+        $statement->execute(
+            [
+                'id' => $id
+            ]
+        );
+
 
         // Toast Value
         $_SESSION['toast'] = "Delete successfully!";
